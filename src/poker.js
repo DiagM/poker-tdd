@@ -1,8 +1,6 @@
 export function evaluateHand(cards) {
-
   return {
     category: "High Card",
-    chosen5: cards
-  }
-
+    chosen5: [...cards],
+  };
 }
