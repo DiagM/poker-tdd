@@ -28,9 +28,18 @@ export function evaluateHand(cards){
     counts[r]=(counts[r]||0)+1
   }
 
-  const hasPair = Object.values(counts).includes(2)
+  const values = Object.values(counts)
 
-  if(hasPair){
+  const pairCount = values.filter(v => v === 2).length
+
+  if(pairCount === 2){
+    return {
+      category:"Two Pair",
+      chosen5:[...cards]
+    }
+  }
+
+  if(pairCount === 1){
     return {
       category:"One Pair",
       chosen5:[...cards]
