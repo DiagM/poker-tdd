@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { evaluateHand, parseCard } from "../src/poker.js";
+import { evaluateHand, parseCard,evaluatePlayerHands  } from "../src/poker.js";
 
 //evaluate hand tests
 describe("Hand evaluation", () => {
@@ -184,3 +184,19 @@ describe("Card parsing", () => {
     expect(card.suit).toBe("♠");
   });
 });
+
+describe("Multi-player evaluation", () => {
+  it("determines the winner correctly", () => {
+    const board = ["5♣","6♦","7♥","8♠","9♦"]
+    const players = [
+      { name: "Player1", hole: ["A♣","A♦"] },
+      { name: "Player2", hole: ["K♣","Q♦"] }
+    ]
+
+    const results = evaluatePlayerHands(board, players)
+
+    expect(results.winners.map(p=>p.name)).toEqual(["Player1","Player2"])
+    expect(results.players[0].category).toBe("Straight")
+    expect(results.players[0].chosen5).toEqual(["9♦","8♠","7♥","6♦","5♣"])
+  })
+})
