@@ -180,3 +180,34 @@ export function evaluateHand(cards) {
   const chosen5 = chooseBest5(cards, category);
   return { category, chosen5 };
 }
+
+export function evaluatePlayerHands(board, players) {
+  // for now, just assign board+hole to each player
+  const results = players.map((p) => {
+    const allCards = [...board, ...p.hole];
+    const hand = evaluateHand(allCards);
+    return { ...p, ...hand };
+  });
+
+  // find winner(s)
+  let maxRank = Math.max(...results.map((r) => rankValue(r))); // placeholder
+  const winners = results.filter((r) => rankValue(r) === maxRank); // placeholder
+
+  return { players: results, winners };
+}
+
+// placeholder function to convert category -> numeric value
+function rankValue(player) {
+  const rankMap = {
+    "Straight Flush": 9,
+    "Four of a kind": 8,
+    "Full House": 7,
+    Flush: 6,
+    Straight: 5,
+    "Three of a kind": 4,
+    "Two Pair": 3,
+    "One Pair": 2,
+    "High Card": 1,
+  };
+  return rankMap[player.category] || 0;
+}

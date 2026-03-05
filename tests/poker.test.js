@@ -199,4 +199,11 @@ describe("Multi-player evaluation", () => {
     expect(results.players[0].category).toBe("Straight")
     expect(results.players[0].chosen5).toEqual(["9♦","8♠","7♥","6♦","5♣"])
   })
+  it("picks best 5 from 7 cards — flush beats straight", () => {
+
+  const allCards = ["A♥", "J♥", "9♥", "4♥", "2♣", "6♥", "K♦"]
+  const result = evaluateHand(allCards)
+  expect(result.category).toBe("Flush")
+  expect(result.chosen5).toEqual(["A♥", "J♥", "9♥", "6♥", "4♥"])
+})
 })
