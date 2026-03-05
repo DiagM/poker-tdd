@@ -18,6 +18,25 @@ export function parseCard(card){
 
 export function evaluateHand(cards){
 
+  const parsed = cards.map(parseCard)
+
+  const ranks = parsed.map(c=>c.rank)
+
+  const counts = {}
+
+  for(const r of ranks){
+    counts[r]=(counts[r]||0)+1
+  }
+
+  const hasPair = Object.values(counts).includes(2)
+
+  if(hasPair){
+    return {
+      category:"One Pair",
+      chosen5:[...cards]
+    }
+  }
+
   return {
     category:"High Card",
     chosen5:[...cards]

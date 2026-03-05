@@ -18,6 +18,13 @@ describe("Hand evaluation", () => {
 
     expect(result.category).toBe("One Pair");
   });
+  it("detects two pair", () => {
+  const cards = ["A♠","A♦","K♣","K♥","2♠"]
+
+  const result = evaluateHand(cards)
+
+  expect(result.category).toBe("Two Pair")
+})
 });
 
 //card parsing tests
