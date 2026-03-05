@@ -64,6 +64,14 @@ describe("Hand evaluation", () => {
 
   expect(result.category).toBe("Four of a kind")
 })
+
+it("detects a straight flush", () => {
+  const cards = ["10♥","J♥","Q♥","K♥","A♥"]
+
+  const result = evaluateHand(cards)
+
+  expect(result.category).toBe("Straight Flush")
+})
 });
 
 //card parsing tests
