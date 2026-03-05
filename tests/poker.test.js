@@ -11,6 +11,13 @@ describe("Hand evaluation", () => {
     expect(result.category).toBe("High Card");
     expect(result.chosen5.length).toBe(5);
   });
+    it("detects one pair", () => {
+    const cards = ["A♠","A♦","7♣","4♥","2♠"];
+
+    const result = evaluateHand(cards);
+
+    expect(result.category).toBe("One Pair");
+  });
 });
 
 //card parsing tests
