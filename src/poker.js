@@ -16,6 +16,23 @@ export function parseCard(card){
 
 }
 
+function isStraight(ranks){
+
+  const unique = [...new Set(ranks)].sort((a,b)=>a-b)
+
+  if(unique.length !== 5){
+    return false
+  }
+
+  for(let i=0;i<4;i++){
+    if(unique[i+1] !== unique[i] + 1){
+      return false
+    }
+  }
+
+  return true
+}
+
 export function evaluateHand(cards){
 
   const parsed = cards.map(parseCard)
@@ -32,6 +49,13 @@ export function evaluateHand(cards){
 
   const pairCount = values.filter(v => v === 2).length
   const hasThree = values.includes(3)
+
+  if(isStraight(ranks)){
+  return {
+    category:"Straight",
+    chosen5:[...cards]
+    }
+}
 
   if(hasThree){
     return {
