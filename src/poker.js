@@ -60,6 +60,12 @@ export function evaluateHand(cards) {
 
   const pairCount = values.filter((v) => v === 2).length;
   const hasThree = values.includes(3);
+  if (isFlush(cards) && isStraight(ranks)) {
+    return {
+      category: "Straight Flush",
+      chosen5: [...cards],
+    };
+  }
   if (isFlush(cards)) {
     return {
       category: "Flush",
@@ -73,11 +79,11 @@ export function evaluateHand(cards) {
       chosen5: [...cards],
     };
   }
-  const hasFour = values.includes(4)
+  const hasFour = values.includes(4);
 
-if(hasFour){
-  return { category:"Four of a kind", chosen5:[...cards] }
-}
+  if (hasFour) {
+    return { category: "Four of a kind", chosen5: [...cards] };
+  }
   if (hasThree && pairCount >= 1) {
     return { category: "Full House", chosen5: [...cards] };
   }
