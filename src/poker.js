@@ -73,6 +73,11 @@ export function evaluateHand(cards) {
       chosen5: [...cards],
     };
   }
+  const hasFour = values.includes(4)
+
+if(hasFour){
+  return { category:"Four of a kind", chosen5:[...cards] }
+}
   if (hasThree && pairCount >= 1) {
     return { category: "Full House", chosen5: [...cards] };
   }
