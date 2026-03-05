@@ -33,6 +33,11 @@ function isStraight(ranks){
   return true
 }
 
+function isFlush(cards){
+  const suits = cards.map(c => parseCard(c).suit)
+  return new Set(suits).size === 1
+}
+
 export function evaluateHand(cards){
 
   const parsed = cards.map(parseCard)
@@ -49,13 +54,20 @@ export function evaluateHand(cards){
 
   const pairCount = values.filter(v => v === 2).length
   const hasThree = values.includes(3)
+  if(isFlush(cards)){
+  return {
+    category: "Flush",
+    chosen5: [...cards]
+    }
+  }
+
 
   if(isStraight(ranks)){
   return {
     category:"Straight",
     chosen5:[...cards]
     }
-}
+  }
 
   if(hasThree){
     return {
