@@ -1,98 +1,105 @@
 const rankMap = {
-  "2":2,"3":3,"4":4,"5":5,"6":6,
-  "7":7,"8":8,"9":9,"10":10,
-  "J":11,"Q":12,"K":13,"A":14
-}
+  2: 2,
+  3: 3,
+  4: 4,
+  5: 5,
+  6: 6,
+  7: 7,
+  8: 8,
+  9: 9,
+  10: 10,
+  J: 11,
+  Q: 12,
+  K: 13,
+  A: 14,
+};
 
-export function parseCard(card){
-
-  const suit = card.slice(-1)
-  const rankStr = card.slice(0,-1)
+export function parseCard(card) {
+  const suit = card.slice(-1);
+  const rankStr = card.slice(0, -1);
 
   return {
     rank: rankMap[rankStr],
-    suit
-  }
-
+    suit,
+  };
 }
 
-function isStraight(ranks){
+function isStraight(ranks) {
+  const unique = [...new Set(ranks)].sort((a, b) => a - b);
 
-  const unique = [...new Set(ranks)].sort((a,b)=>a-b)
-
-  if(unique.length !== 5){
-    return false
+  if (unique.length !== 5) {
+    return false;
   }
 
-  for(let i=0;i<4;i++){
-    if(unique[i+1] !== unique[i] + 1){
-      return false
+  for (let i = 0; i < 4; i++) {
+    if (unique[i + 1] !== unique[i] + 1) {
+      return false;
     }
   }
 
-  return true
+  return true;
 }
 
-function isFlush(cards){
-  const suits = cards.map(c => parseCard(c).suit)
-  return new Set(suits).size === 1
+function isFlush(cards) {
+  const suits = cards.map((c) => parseCard(c).suit);
+  return new Set(suits).size === 1;
 }
 
-export function evaluateHand(cards){
+export function evaluateHand(cards) {
+  const parsed = cards.map(parseCard);
 
-  const parsed = cards.map(parseCard)
+  const ranks = parsed.map((c) => c.rank);
 
-  const ranks = parsed.map(c=>c.rank)
+  const counts = {};
 
-  const counts = {}
-
-  for(const r of ranks){
-    counts[r]=(counts[r]||0)+1
+  for (const r of ranks) {
+    counts[r] = (counts[r] || 0) + 1;
   }
 
-  const values = Object.values(counts)
+  const values = Object.values(counts);
 
-  const pairCount = values.filter(v => v === 2).length
-  const hasThree = values.includes(3)
-  if(isFlush(cards)){
-  return {
-    category: "Flush",
-    chosen5: [...cards]
-    }
-  }
-
-
-  if(isStraight(ranks)){
-  return {
-    category:"Straight",
-    chosen5:[...cards]
-    }
-  }
-
-  if(hasThree){
+  const pairCount = values.filter((v) => v === 2).length;
+  const hasThree = values.includes(3);
+  if (isFlush(cards)) {
     return {
-      category:"Three of a kind",
-      chosen5:[...cards]
-    }
+      category: "Flush",
+      chosen5: [...cards],
+    };
   }
 
-  if(pairCount === 2){
+  if (isStraight(ranks)) {
     return {
-      category:"Two Pair",
-      chosen5:[...cards]
-    }
+      category: "Straight",
+      chosen5: [...cards],
+    };
+  }
+  if (hasThree && pairCount >= 1) {
+    return { category: "Full House", chosen5: [...cards] };
   }
 
-  if(pairCount === 1){
+  if (hasThree) {
     return {
-      category:"One Pair",
-      chosen5:[...cards]
-    }
+      category: "Three of a kind",
+      chosen5: [...cards],
+    };
+  }
+
+  if (pairCount === 2) {
+    return {
+      category: "Two Pair",
+      chosen5: [...cards],
+    };
+  }
+
+  if (pairCount === 1) {
+    return {
+      category: "One Pair",
+      chosen5: [...cards],
+    };
   }
 
   return {
-    category:"High Card",
-    chosen5:[...cards]
-  }
-
+    category: "High Card",
+    chosen5: [...cards],
+  };
 }

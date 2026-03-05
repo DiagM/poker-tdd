@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { evaluateHand,parseCard } from "../src/poker.js";
+import { evaluateHand, parseCard } from "../src/poker.js";
 
 //evaluate hand tests
 describe("Hand evaluation", () => {
@@ -11,65 +11,60 @@ describe("Hand evaluation", () => {
     expect(result.category).toBe("High Card");
     expect(result.chosen5.length).toBe(5);
   });
-    it("detects one pair", () => {
-    const cards = ["A♠","A♦","7♣","4♥","2♠"];
+  it("detects one pair", () => {
+    const cards = ["A♠", "A♦", "7♣", "4♥", "2♠"];
 
     const result = evaluateHand(cards);
 
     expect(result.category).toBe("One Pair");
   });
   it("detects two pair", () => {
-  const cards = ["A♠","A♦","K♣","K♥","2♠"]
+    const cards = ["A♠", "A♦", "K♣", "K♥", "2♠"];
 
-  const result = evaluateHand(cards)
+    const result = evaluateHand(cards);
 
-  expect(result.category).toBe("Two Pair")
-})
+    expect(result.category).toBe("Two Pair");
+  });
 
-it("detects three of a kind", () => {
-  const cards = ["A♠","A♦","A♣","7♥","2♠"]
+  it("detects three of a kind", () => {
+    const cards = ["A♠", "A♦", "A♣", "7♥", "2♠"];
 
-  const result = evaluateHand(cards)
+    const result = evaluateHand(cards);
 
-  expect(result.category).toBe("Three of a kind")
-})
+    expect(result.category).toBe("Three of a kind");
+  });
 
-it("detects a straight", () => {
-  const cards = ["10♠","J♦","Q♣","K♥","A♠"]
+  it("detects a straight", () => {
+    const cards = ["10♠", "J♦", "Q♣", "K♥", "A♠"];
 
-  const result = evaluateHand(cards)
+    const result = evaluateHand(cards);
 
-  expect(result.category).toBe("Straight")
-})
+    expect(result.category).toBe("Straight");
+  });
 
-it("detects a flush", () => {
-  const cards = ["A♥","J♥","9♥","4♥","2♥"]
+  it("detects a flush", () => {
+    const cards = ["A♥", "J♥", "9♥", "4♥", "2♥"];
 
-  const result = evaluateHand(cards)
+    const result = evaluateHand(cards);
 
-  expect(result.category).toBe("Flush")
-})
+    expect(result.category).toBe("Flush");
+  });
 
-it("detects a full house", () => {
-  const cards = ["K♠","K♦","K♣","Q♥","Q♠"]
+  it("detects a full house", () => {
+    const cards = ["K♠", "K♦", "K♣", "Q♥", "Q♠"];
 
-  const result = evaluateHand(cards)
+    const result = evaluateHand(cards);
 
-  expect(result.category).toBe("Full House")
-})
-
+    expect(result.category).toBe("Full House");
+  });
 });
 
 //card parsing tests
 describe("Card parsing", () => {
-
   it("parses an Ace of spades", () => {
+    const card = parseCard("A♠");
 
-    const card = parseCard("A♠")
-
-    expect(card.rank).toBe(14)
-    expect(card.suit).toBe("♠")
-
-  })
-
-})
+    expect(card.rank).toBe(14);
+    expect(card.suit).toBe("♠");
+  });
+});
