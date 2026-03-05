@@ -31,6 +31,14 @@ export function evaluateHand(cards){
   const values = Object.values(counts)
 
   const pairCount = values.filter(v => v === 2).length
+  const hasThree = values.includes(3)
+
+  if(hasThree){
+    return {
+      category:"Three of a kind",
+      chosen5:[...cards]
+    }
+  }
 
   if(pairCount === 2){
     return {
