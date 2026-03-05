@@ -72,6 +72,21 @@ it("detects a straight flush", () => {
 
   expect(result.category).toBe("Straight Flush")
 })
+
+it("resolves four of a kind tie with kicker", () => {
+  const player1 = ["7♠","7♦","7♣","7♥","A♠"]
+  const player2 = ["7♠","7♦","7♣","7♥","K♠"]
+
+  const result1 = evaluateHand(player1)
+  const result2 = evaluateHand(player2)
+
+  expect(result1.category).toBe("Four of a kind")
+  expect(result2.category).toBe("Four of a kind")
+
+  // highest kicker wins
+  expect(result1.chosen5[4]).toBe("A♠")
+  expect(result2.chosen5[4]).toBe("K♠")
+})
 });
 
 //card parsing tests
