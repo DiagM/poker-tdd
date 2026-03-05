@@ -49,6 +49,15 @@ it("detects a flush", () => {
 
   expect(result.category).toBe("Flush")
 })
+
+it("detects a full house", () => {
+  const cards = ["K♠","K♦","K♣","Q♥","Q♠"]
+
+  const result = evaluateHand(cards)
+
+  expect(result.category).toBe("Full House")
+})
+
 });
 
 //card parsing tests
