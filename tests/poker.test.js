@@ -57,6 +57,13 @@ describe("Hand evaluation", () => {
 
     expect(result.category).toBe("Full House");
   });
+  it("detects four of a kind", () => {
+  const cards = ["7♠","7♦","7♣","7♥","2♠"]
+
+  const result = evaluateHand(cards)
+
+  expect(result.category).toBe("Four of a kind")
+})
 });
 
 //card parsing tests
